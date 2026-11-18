@@ -12,3 +12,6 @@ import { controllers } from '#generated/controllers'
 import router from '@adonisjs/core/services/router'
 import db from '@adonisjs/lucid/services/db'
 
+router.get('/', async () => {
+  return 'PawMatch läuft!'
+})
