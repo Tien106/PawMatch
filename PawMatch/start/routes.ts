@@ -12,3 +12,18 @@ import { controllers } from '#generated/controllers'
 import router from '@adonisjs/core/services/router'
 import db from '@adonisjs/lucid/services/db'
 
+
+
+//Registrierungsroute
+router.get('/', async () => {
+
+
+}
+)
+
+router.post('/', async () => {
+
+})
+
+//Ende Registrierungsroute
+
