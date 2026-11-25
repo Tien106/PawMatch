@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dein Profil – PawMatch</title>
+
+  <style>
+    :root {
+      --background: #faf7f3;
+      --surface: #fffdfa;
+      --text: #322f2b;
+      --muted: #70695f;
+      --border: #e9e1d8;
+      --green: #285b43;
+      --green-light: #e1f0e5;
+      --green-soft: #f0f6f1;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--background);
+      color: var(--text);
+      font-family: Arial, sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    button,
+    .button {
+      cursor: pointer;
+    }
+
+    a:focus-visible,
+    button:focus-visible,
+    input:focus-visible {
+      outline: 3px solid var(--green);
+      outline-offset: 4px;
+    }
+
+    .site-header {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .navigation {
+      max-width: 1140px;
+      min-height: 72px;
+      margin: auto;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font: bold 23px Georgia, serif;
+    }
+
+    .brand-icon {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--green);
+      color: white;
+      font-family: Arial, sans-serif;
+      font-size: 20px;
+    }
+
+    .nav-links,
+    .account {
+      display: flex;
+      align-items: center;
+      gap: 26px;
+    }
+
+    .nav-links {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .badge {
+      padding: 1px 5px;
+      border-radius: 50%;
+      background: var(--green);
+      color: white;
+      font-size: 10px;
+      vertical-align: top;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 7px 17px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--surface);
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .icon-button {
+      padding: 4px;
+      border: 0;
+      background: transparent;
+      color: var(--text);
+      font-size: 20px;
+    }
+
+    main {
+      max-width: 1040px;
+      margin: 42px auto;
+      padding: 0 24px;
+    }
+
+    .intro {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 28px;
+    }
+
+    .eyebrow {
+      margin: 0 0 9px;
+      color: #3d7956;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2 {
+      font-family: Georgia, serif;
+      line-height: 1.2;
+      letter-spacing: -1px;
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: 48px;
+    }
+
+    h2 {
+      margin: 0 0 16px;
+      font-size: 25px;
+    }
+
+    p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .intro p:last-child {
+      max-width: 510px;
+    }
+
+    .intro .button {
+      flex-shrink: 0;
+    }
+
+    .profile-layout {
+      display: grid;
+      grid-template-columns: 248px minmax(0, 1fr);
+      gap: 20px;
+      align-items: start;
+    }
+
+    .card {
+      padding: 22px;
+      border: 1px solid var(--border);
+      border-radius: 17px;
+      background: var(--surface);
+    }
+
+    .profile-card {
+      text-align: center;
+    }
+
+    .avatar {
+      display: grid;
+      place-items: center;
+      width: 76px;
+      height: 76px;
+      margin: 0 auto 12px;
+      border: 5px solid var(--green-soft);
+      border-radius: 50%;
+      background: var(--green-light);
+      color: var(--green);
+      font: bold 25px Georgia, serif;
+    }
+
+    .profile-card h2 {
+      margin-bottom: 2px;
+      font-size: 24px;
+    }
+
+    .progress {
+      width: 100%;
+      height: 5px;
+      margin: 20px 0 6px;
+      overflow: hidden;
+      border-radius: 5px;
+      background: var(--green-light);
+    }
+
+    .progress-fill {
+      width: 85%;
+      height: 100%;
+      background: #3d7956;
+    }
+
+    .completion {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .status-list {
+      display: grid;
+      gap: 9px;
+      margin: 20px 0 0;
+      padding: 16px 0 0;
+      border-top: 1px solid var(--border);
+      list-style: none;
+      text-align: left;
+      color: var(--muted);
+    }
+
+    .status-list li {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .status-icon {
+      color: #4a8a64;
+    }
+
+    .details {
+      display: grid;
+      gap: 14px;
+    }
+
+    .card-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .section-icon {
+      color: #3d7956;
+      font-size: 24px;
+    }
+
+    .fields {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin: 0;
+    }
+
+    .fields dt {
+      margin-bottom: 5px;
+      font-weight: 600;
+    }
+
+    .fields dd {
+      margin: 0;
+      padding: 6px 12px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--background);
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: 0 0 16px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .tags li {
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: var(--green-light);
+      color: var(--green);
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .search-button {
+      border-color: transparent;
+      background: var(--green-soft);
+      color: var(--green);
+    }
+
+    .verification-status {
+      margin-bottom: 14px;
+      padding: 10px 24px;
+      border-radius: 10px;
+      background: var(--background);
+    }
+
+    .verification-status strong {
+      display: block;
+    }
+
+    .upload {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 16px;
+      padding: 14px 16px;
+      border: 1px dashed #a8cfb5;
+      border-radius: 10px;
+      background: var(--green-soft);
+      cursor: pointer;
+    }
+
+    .upload input {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .upload:focus-within {
+      outline: 3px solid var(--green);
+      outline-offset: 3px;
+    }
+
+    .upload strong,
+    .upload small {
+      display: block;
+    }
+
+    .upload small {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    @media (max-width: 1000px) {
+      .navigation {
+        flex-wrap: wrap;
+      }
+
+      .nav-links {
+        order: 3;
+        width: 100%;
+        flex-wrap: wrap;
+        gap: 12px 22px;
+      }
+    }
+
+    @media (max-width: 700px) {
+      main {
+        margin-top: 28px;
+        padding: 0 16px;
+      }
+
+      .intro {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      h1 {
+        font-size: 40px;
+      }
+
+      .profile-layout,
+      .fields {
+        grid-template-columns: 1fr;
+      }
+
+      .navigation {
+        padding-inline: 16px;
+        gap: 16px;
+      }
+
+      .account {
+        gap: 10px;
+      }
+
+      .card {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="site-header">
+    <nav class="navigation" aria-label="Hauptnavigation">
+      <a class="brand" href="/">
+        <span class="brand-icon" aria-hidden="true">♧</span>
+        PawMatch
+      </a>
+
+      <div class="nav-links">
+        <a href="/entdecken">Entdecken</a>
+        <a href="/favoriten">
+          Favoriten <span class="badge">1</span>
+        </a>
+        <a href="/erfahrungen">Erfahrungen</a>
+        <a href="/anfragen">Anfragen &amp; Matches</a>
+        <a href="/nachrichten">Nachrichten</a>
+      </div>
+
+      <div class="account">
+        <button class="icon-button" type="button"
+                aria-label="Benachrichtigungen">
+          ♧
+        </button>
+        <a class="button" href="/profil" aria-current="page">
+          <span aria-hidden="true">◎</span>
+          Lena Hoffmann
+        </a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="intro" aria-labelledby="page-title">
+      <div>
+        <p class="eyebrow">Dein PawMatch Profil</p>
+        <h1 id="page-title">Hallo, Lena.</h1>
+        <p>
+          Je vollständiger dein Profil, desto besser können Tierheime
+          deine Anfrage einschätzen.
+        </p>
+      </div>
+
+      <a class="button" href="/profil/bearbeiten">
+        <span aria-hidden="true">✎</span>
+        Profil bearbeiten
+      </a>
+    </section>
+
+    <div class="profile-layout">
+      <aside class="card profile-card" aria-label="Profilübersicht">
+        <div class="avatar" aria-hidden="true">LH</div>
+        <h2>Lena Hoffmann</h2>
+        <p>Hamburg · seit Februar 2026</p>
+
+        <div class="progress" role="progressbar"
+             aria-label="Profilvollständigkeit"
+             aria-valuenow="85" aria-valuemin="0" aria-valuemax="100">
+          <div class="progress-fill"></div>
+        </div>
+        <p class="completion">Profil zu 85 % vollständig</p>
+
+        <ul class="status-list">
+          <li>
+            <span class="status-icon" aria-hidden="true">◷</span>
+            Identitätsprüfung ausstehend
+          </li>
+          <li>
+            <span class="status-icon" aria-hidden="true">✓</span>
+            E-Mail verifiziert
+          </li>
+          <li>
+            <span class="status-icon" aria-hidden="true">◷</span>
+            Antwortet meist am selben Tag
+          </li>
+        </ul>
+      </aside>
+
+      <div class="details">
+        <section class="card" aria-labelledby="housing-title">
+          <div class="card-heading">
+            <div>
+              <p class="eyebrow">Über dich</p>
+              <h2 id="housing-title">Wohnsituation</h2>
+            </div>
+            <span class="section-icon" aria-hidden="true">⌂</span>
+          </div>
+
+          <dl class="fields">
+            <div>
+              <dt>Wohnform</dt>
+              <dd>Wohnung mit Balkon</dd>
+            </div>
+            <div>
+              <dt>Haushalt</dt>
+              <dd>2 Erwachsene</dd>
+            </div>
+            <div>
+              <dt>Umgebung</dt>
+              <dd>Stadtnah, Park in 5 Minuten</dd>
+            </div>
+            <div>
+              <dt>Vermieterzustimmung</dt>
+              <dd>Liegt vor</dd>
+            </div>
+          </dl>
+        </section>
+
+        <section class="card" aria-labelledby="experience-title">
+          <p class="eyebrow">Erfahrung</p>
+          <h2 id="experience-title">Leben mit Tieren</h2>
+          <p>
+            Ich bin mit Hunden aufgewachsen und habe in den letzten
+            zwei Jahren regelmäßig einen Tierschutzhund betreut.
+            Wir suchen einen aktiven, menschenbezogenen Begleiter.
+          </p>
+        </section>
+
+        <section class="card" aria-labelledby="preferences-title">
+          <p class="eyebrow">Wünsche</p>
+          <h2 id="preferences-title">Präferenzen</h2>
+
+          <ul class="tags" aria-label="Bevorzugte Eigenschaften">
+            <li>Hund</li>
+            <li>2–6 Jahre</li>
+            <li>Bis 50 km</li>
+            <li>Kinderfreundlich</li>
+            <li>Aktiv</li>
+          </ul>
+
+          <a class="button search-button"
+             href="/entdecken?tierart=hund&amp;alterMin=2&amp;alterMax=6&amp;radius=50&amp;kinderfreundlich=1&amp;aktiv=1">
+            <span aria-hidden="true">☷</span>
+            Suche mit diesen Filtern starten
+          </a>
+        </section>
+
+        <section class="card" aria-labelledby="verification-title">
+          <p class="eyebrow">Separater Sicherheitsschritt</p>
+          <h2 id="verification-title">Verifizierung</h2>
+
+          <div class="verification-status">
+            <p>Aktueller Status</p>
+            <strong>Noch nicht eingereicht</strong>
+          </div>
+
+          <p>
+            Lade einen gültigen Ausweis hoch. Deine Identität wird
+            ausschließlich zur Sicherheit der Vermittlung geprüft.
+          </p>
+
+          <label class="upload">
+            <span class="section-icon" aria-hidden="true">↥</span>
+            <span>
+              <strong>Ausweis auswählen</strong>
+              <small id="upload-hint">
+                PDF, JPG oder PNG · maximal 10 MB
+              </small>
+            </span>
+            <input type="file" name="ausweis"
+                   accept=".pdf,.jpg,.jpeg,.png"
+                   aria-label="Ausweis auswählen"
+                   aria-describedby="upload-hint">
+          </label>
+        </section>
+      </div>
+    </div>
+  </main>
+</body>
+</html>
